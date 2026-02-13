@@ -1,0 +1,327 @@
+import React, { useState } from 'react';
+import { ArrowRight, ArrowLeft, RefreshCw, Calculator, Coins, PiggyBank, TrendingUp, Sparkles } from 'lucide-react';
+
+const InterestComic = () => {
+  const [currentScene, setCurrentScene] = useState(0);
+
+  // 互动计算器的状态
+  const [principal, setPrincipal] = useState(1000);
+  const [rate, setRate] = useState(10);
+  const [years, setYears] = useState(3);
+
+  // 场景数据
+  const scenes = [
+    {
+      id: 0,
+      title: "第一章：小明的烦恼",
+      bg: "bg-blue-50",
+      content: (
+        <div className="flex flex-col items-center space-y-6">
+          <div className="flex items-end space-x-4">
+            <div className="w-32 h-32 bg-yellow-200 rounded-full flex items-center justify-center border-4 border-yellow-400 relative">
+              <span className="text-4xl">👦</span>
+              <div className="absolute -bottom-2 bg-yellow-500 text-white px-2 py-1 text-xs rounded-full">小明</div>
+            </div>
+            <div className="bg-white p-4 rounded-2xl rounded-bl-none shadow-lg border-2 border-gray-200 max-w-xs relative animate-bounce-slow">
+              <p className="text-lg text-gray-700">我过年收到了 <span className="font-bold text-red-500">1000元</span> 红包！我想存起来，3年后买个超酷的游戏机。</p>
+            </div>
+          </div>
+          
+          <div className="flex items-end space-x-4 flex-row-reverse">
+            <div className="w-32 h-32 bg-purple-200 rounded-full flex items-center justify-center border-4 border-purple-400 relative">
+              <span className="text-4xl">👴</span>
+              <div className="absolute -bottom-2 bg-purple-600 text-white px-2 py-1 text-xs rounded-full">钱博士</div>
+            </div>
+            <div className="bg-white p-4 rounded-2xl rounded-br-none shadow-lg border-2 border-gray-200 max-w-xs text-right mr-4">
+              <p className="text-lg text-gray-700">好主意！但是小明，你知道存钱有两种魔法吗？一种叫<span className="font-bold text-blue-600">单利</span>，一种叫<span className="font-bold text-green-600">复利</span>。</p>
+            </div>
+          </div>
+          
+          <div className="mt-8 bg-yellow-100 p-4 rounded-lg border-2 border-yellow-300 w-full max-w-md">
+            <h3 className="font-bold text-yellow-800 flex items-center"><PiggyBank className="w-5 h-5 mr-2"/> 知识卡片：本金</h3>
+            <p className="text-yellow-900">小明最初拥有的这 1000元，在数学里我们叫它<span className="font-bold text-xl mx-1">本金</span>。</p>
+          </div>
+        </div>
+      )
+    },
+    {
+      id: 1,
+      title: "第二章：单利魔法 (Simple Interest)",
+      bg: "bg-blue-100",
+      content: (
+        <div className="flex flex-col items-center space-y-4">
+           <div className="flex items-start space-x-4 w-full max-w-lg">
+            <div className="w-20 h-20 bg-purple-200 rounded-full flex-shrink-0 flex items-center justify-center border-2 border-purple-400">
+              <span className="text-3xl">👴</span>
+            </div>
+            <div className="bg-white p-3 rounded-2xl rounded-tl-none shadow border border-gray-200 flex-grow">
+              <p className="text-gray-700">如果你选择<span className="font-bold text-blue-600">单利</span>，银行每年只按你最初的1000元给你发糖果（利息）。</p>
+              <p className="text-sm text-gray-500 mt-2">假设利率是 10% (也就是每年送你本金的 1/10)</p>
+            </div>
+          </div>
+
+          <div className="w-full max-w-lg bg-white rounded-xl shadow-lg p-4 space-y-3">
+             <div className="flex justify-between items-center border-b pb-2">
+                <span className="font-bold text-gray-500">第1年</span>
+                <div className="flex items-center text-blue-600">
+                  <span className="mr-2">本金1000</span>
+                  <ArrowRight className="w-4 h-4 mx-1"/>
+                  <span>利息 <span className="font-bold text-lg">100</span></span>
+                </div>
+             </div>
+             <div className="flex justify-between items-center border-b pb-2">
+                <span className="font-bold text-gray-500">第2年</span>
+                <div className="flex items-center text-blue-600">
+                  <span className="mr-2">还是按1000算</span>
+                  <ArrowRight className="w-4 h-4 mx-1"/>
+                  <span>利息 <span className="font-bold text-lg">100</span></span>
+                </div>
+             </div>
+             <div className="flex justify-between items-center">
+                <span className="font-bold text-gray-500">第3年</span>
+                <div className="flex items-center text-blue-600">
+                  <span className="mr-2">还是按1000算</span>
+                  <ArrowRight className="w-4 h-4 mx-1"/>
+                  <span>利息 <span className="font-bold text-lg">100</span></span>
+                </div>
+             </div>
+          </div>
+
+          <div className="bg-blue-200 p-4 rounded-lg w-full max-w-md text-center">
+            <p className="text-blue-900 font-bold text-lg">
+              3年后总共有：<br/>
+              1000 (本金) + 100 + 100 + 100 = <span className="text-3xl">1300元</span>
+            </p>
+          </div>
+        </div>
+      )
+    },
+    {
+      id: 2,
+      title: "第三章：复利魔法 (Compound Interest)",
+      bg: "bg-green-100",
+      content: (
+        <div className="flex flex-col items-center space-y-4">
+           <div className="flex items-start space-x-4 w-full max-w-lg">
+            <div className="w-20 h-20 bg-purple-200 rounded-full flex-shrink-0 flex items-center justify-center border-2 border-purple-400">
+              <span className="text-3xl">👴</span>
+            </div>
+            <div className="bg-white p-3 rounded-2xl rounded-tl-none shadow border border-gray-200 flex-grow">
+              <p className="text-gray-700">现在看看<span className="font-bold text-green-600">复利</span>！它的秘诀叫“利滚利”。每年的利息都会变成下一年的本金！</p>
+            </div>
+          </div>
+
+          <div className="w-full max-w-lg bg-white rounded-xl shadow-lg p-4 space-y-3 relative overflow-hidden">
+             <div className="absolute top-0 right-0 p-2 opacity-10">
+                <TrendingUp className="w-32 h-32 text-green-500"/>
+             </div>
+             
+             {/* Year 1 */}
+             <div className="flex flex-col border-b pb-2">
+                <div className="flex justify-between">
+                  <span className="font-bold text-gray-500">第1年</span>
+                  <span className="text-green-600 font-bold">+100 利息</span>
+                </div>
+                <div className="text-sm text-gray-500">本金 1000 × 10% = 100</div>
+                <div className="text-right font-bold text-green-700">年底总额：1100</div>
+             </div>
+
+             {/* Year 2 */}
+             <div className="flex flex-col border-b pb-2 bg-green-50 p-2 rounded">
+                <div className="flex justify-between items-center">
+                  <span className="font-bold text-gray-700">第2年 (关键！)</span>
+                  <span className="text-green-600 font-bold">+110 利息</span>
+                </div>
+                <div className="text-sm text-gray-600">
+                  <span className="bg-yellow-200 px-1 rounded font-bold">新的本金 1100</span> × 10% = 110
+                </div>
+                <div className="text-right font-bold text-green-700">年底总额：1210</div>
+             </div>
+
+             {/* Year 3 */}
+             <div className="flex flex-col p-2 bg-green-100 rounded border border-green-200">
+                <div className="flex justify-between items-center">
+                  <span className="font-bold text-gray-800">第3年</span>
+                  <span className="text-green-600 font-bold">+121 利息</span>
+                </div>
+                <div className="text-sm text-gray-600">
+                  <span className="bg-yellow-200 px-1 rounded font-bold">新的本金 1210</span> × 10% = 121
+                </div>
+                <div className="text-right font-bold text-green-800 text-xl">年底总额：1331</div>
+             </div>
+          </div>
+
+          <div className="bg-green-600 text-white p-3 rounded-lg w-full max-w-md text-center shadow-lg transform scale-105">
+            <p className="font-bold">
+              复利比单利多赚了：<br/>
+              1331 - 1300 = <span className="text-2xl text-yellow-300">31元!</span>
+            </p>
+            <p className="text-xs mt-1 text-green-100">时间越久，差别越大哦！</p>
+          </div>
+        </div>
+      )
+    },
+    {
+      id: 3,
+      title: "第四章：动手算一算",
+      bg: "bg-indigo-50",
+      content: (
+        <div className="flex flex-col items-center w-full max-w-2xl mx-auto">
+           <div className="flex items-center space-x-2 mb-6">
+            <div className="w-16 h-16 bg-yellow-200 rounded-full flex items-center justify-center border-2 border-yellow-400">
+              <span className="text-2xl">👦</span>
+            </div>
+            <div className="bg-white p-3 rounded-2xl rounded-tl-none shadow">
+              <p className="text-gray-700">太神奇了！那如果我有5000元，存10年呢？</p>
+            </div>
+          </div>
+
+          <div className="bg-white p-6 rounded-2xl shadow-xl w-full border border-indigo-100">
+            <div className="flex items-center gap-2 mb-4 text-indigo-700 font-bold text-lg">
+              <Calculator className="w-6 h-6"/>
+              小小银行家计算器
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+              <div>
+                <label className="block text-sm font-bold text-gray-600 mb-1">本金 (元)</label>
+                <input 
+                  type="number" 
+                  value={principal} 
+                  onChange={(e) => setPrincipal(Number(e.target.value))}
+                  className="w-full p-2 border-2 border-indigo-200 rounded-lg focus:border-indigo-500 outline-none text-lg font-mono"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-bold text-gray-600 mb-1">年利率 (%)</label>
+                <input 
+                  type="number" 
+                  value={rate} 
+                  onChange={(e) => setRate(Number(e.target.value))}
+                  className="w-full p-2 border-2 border-indigo-200 rounded-lg focus:border-indigo-500 outline-none text-lg font-mono"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-bold text-gray-600 mb-1">存几年</label>
+                <input 
+                  type="number" 
+                  value={years} 
+                  onChange={(e) => setYears(Number(e.target.value))}
+                  className="w-full p-2 border-2 border-indigo-200 rounded-lg focus:border-indigo-500 outline-none text-lg font-mono"
+                />
+              </div>
+            </div>
+
+            {/* Calculation Result */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="bg-blue-50 p-4 rounded-xl border border-blue-200">
+                <h4 className="text-blue-800 font-bold mb-2 flex items-center"><Coins className="w-4 h-4 mr-1"/> 单利结果</h4>
+                <div className="text-3xl font-bold text-blue-600">
+                  {Math.floor(principal * (1 + (rate/100) * years))}
+                </div>
+                <div className="text-xs text-blue-400 mt-1">
+                  公式: {principal} + ({principal} × {rate}% × {years})
+                </div>
+              </div>
+
+              <div className="bg-green-50 p-4 rounded-xl border border-green-200 relative overflow-hidden">
+                <div className="absolute -right-4 -top-4 text-green-100 opacity-50">
+                  <Sparkles className="w-20 h-20"/>
+                </div>
+                <h4 className="text-green-800 font-bold mb-2 flex items-center"><TrendingUp className="w-4 h-4 mr-1"/> 复利结果</h4>
+                <div className="text-3xl font-bold text-green-600">
+                  {Math.floor(principal * Math.pow((1 + rate/100), years))}
+                </div>
+                <div className="text-xs text-green-400 mt-1">
+                  比单利多赚: {Math.floor(principal * Math.pow((1 + rate/100), years)) - Math.floor(principal * (1 + (rate/100) * years))} 元
+                </div>
+              </div>
+            </div>
+            
+            <div className="mt-6 text-center text-sm text-gray-500 bg-gray-50 p-2 rounded">
+              💡 小提示：在真实世界里，复利需要时间才能发挥威力。爱因斯坦说复利是世界第八大奇迹哦！
+            </div>
+          </div>
+        </div>
+      )
+    }
+  ];
+
+  return (
+    <div className={`min-h-screen ${scenes[currentScene].bg} transition-colors duration-500 p-4 md:p-8 font-sans`}>
+      <div className="max-w-4xl mx-auto">
+        {/* Header */}
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-800 flex items-center gap-2">
+            📘 趣味数学漫画
+          </h1>
+          <div className="text-gray-500 font-medium">
+            页数: {currentScene + 1} / {scenes.length}
+          </div>
+        </div>
+
+        {/* Comic Panel */}
+        <div className="bg-white/60 backdrop-blur-sm rounded-3xl shadow-2xl overflow-hidden min-h-[500px] border-4 border-white flex flex-col">
+          {/* Title Bar */}
+          <div className="bg-white/80 p-4 border-b border-gray-100 text-center">
+            <h2 className="text-2xl font-bold text-indigo-900">{scenes[currentScene].title}</h2>
+          </div>
+
+          {/* Scene Content */}
+          <div className="flex-grow p-6 flex items-center justify-center">
+            <div className="w-full">
+              {scenes[currentScene].content}
+            </div>
+          </div>
+
+          {/* Navigation Controls */}
+          <div className="bg-white p-4 flex justify-between items-center border-t border-gray-100">
+            <button 
+              onClick={() => setCurrentScene(Math.max(0, currentScene - 1))}
+              disabled={currentScene === 0}
+              className={`flex items-center space-x-2 px-6 py-3 rounded-full font-bold transition-all ${
+                currentScene === 0 
+                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
+                  : 'bg-indigo-100 text-indigo-600 hover:bg-indigo-200'
+              }`}
+            >
+              <ArrowLeft className="w-5 h-5" />
+              <span>上一页</span>
+            </button>
+
+            <div className="flex space-x-2">
+              {scenes.map((_, idx) => (
+                <div 
+                  key={idx}
+                  className={`w-3 h-3 rounded-full transition-all ${
+                    currentScene === idx ? 'bg-indigo-600 scale-125' : 'bg-gray-300'
+                  }`}
+                />
+              ))}
+            </div>
+
+            <button 
+              onClick={() => setCurrentScene(Math.min(scenes.length - 1, currentScene + 1))}
+              disabled={currentScene === scenes.length - 1}
+              className={`flex items-center space-x-2 px-6 py-3 rounded-full font-bold transition-all ${
+                currentScene === scenes.length - 1 
+                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
+                  : 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg hover:shadow-indigo-500/30'
+              }`}
+            >
+              <span>下一页</span>
+              <ArrowRight className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="mt-8 text-center text-gray-500 text-sm">
+          © 2026 钱博士数学课堂 | 适合5年级学生
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default InterestComic;
